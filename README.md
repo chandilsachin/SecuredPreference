@@ -1,5 +1,5 @@
 # SecuredPreference
-This library lets to store data secretly using Android KeyStore.
+This library lets you store data secretly using Android KeyStore.
 
 #### Requirements:
 
