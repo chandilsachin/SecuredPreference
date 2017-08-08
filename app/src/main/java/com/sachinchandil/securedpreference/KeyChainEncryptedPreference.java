@@ -1,3 +1,5 @@
+package com.sachinchandil.securedpreference;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -15,7 +17,7 @@ public class KeyChainEncryptedPreference {
     }
 
     /**
-     * Writes a enctypted value agains key
+     * Writes a encrypted value against key
      */
     public void write(String key, String value) {
         SharedPreferences.Editor editor = preferences.edit();
@@ -35,14 +37,14 @@ public class KeyChainEncryptedPreference {
     /**
      * Encrypts data
      */
-    private String encrypt(String data) {
+    public String encrypt(String data) {
         return keyChainManager.encrypt(data);
     }
 
     /**
      * Decrypts data
-    */
-    private String decrypt(String data) {
+     */
+    public String decrypt(String data) {
         return keyChainManager.decrypt(data);
     }
 

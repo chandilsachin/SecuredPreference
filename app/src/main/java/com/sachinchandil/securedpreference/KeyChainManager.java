@@ -1,3 +1,5 @@
+package com.sachinchandil.securedpreference;
+
 import android.content.Context;
 import android.os.Build;
 import android.security.KeyPairGeneratorSpec;
@@ -110,7 +112,7 @@ public class KeyChainManager {
             inputCipher.init(Cipher.ENCRYPT_MODE, publicKey);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             CipherOutputStream cipherOut = new CipherOutputStream(out, inputCipher);
-            cipherOut.write(Base64.decode(data, Base64.DEFAULT));
+            cipherOut.write(Base64.encode(data.getBytes("UTF-8"), Base64.DEFAULT));
             cipherOut.close();
 
             return Base64.encodeToString(out.toByteArray(), Base64.DEFAULT);
@@ -133,7 +135,7 @@ public class KeyChainManager {
     }
 
     /**
-     * Decrypts encryptedData 
+     * Decrypts encryptedData
      */
     public String decrypt(String encryptedData) {
         try {
@@ -153,7 +155,7 @@ public class KeyChainManager {
             for (int i = 0; i < bytes.length; i++) {
                 bytes[i] = values.get(i);
             }
-            return Base64.encodeToString(bytes, Base64.DEFAULT).trim();
+            return new String(Base64.decode(bytes, Base64.DEFAULT)).trim();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnrecoverableEntryException e) {
