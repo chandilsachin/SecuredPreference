@@ -1,10 +1,10 @@
 # SecuredPreference
-This library lets to store data secretly using Android KeyStore.
+This library lets you store data secretly using Android KeyStore in `SharedPreferences`.
 
-####Requirements:
+#### Requirements:
 
 Min SDK version: 18
 
-###How to use:
+### How to use:
 
 Have a look in `com.sachinchandil.securedpreference.demo` package.
