@@ -24,21 +24,22 @@ public class KeyGenerationTest {
 
     private final String PASSWORD = "12345678@asdf";
     private SecuredPreference securedPreference;
+    private KeyChainEncryptedPreference keyChainEncryptedPreference;
 
     @Before
     public void setup(){
-
+        securedPreference = new SecuredPreference(InstrumentationRegistry.getTargetContext(), "test1");
+        keyChainEncryptedPreference = new KeyChainEncryptedPreference(InstrumentationRegistry.getTargetContext(), "test1");
     }
 
     @After
     public void tearDown(){
-
+        keyChainEncryptedPreference.flushData();
     }
 
     @Test
     public void shouldStoreSecureKeyInPreference() throws Exception {
 
-        securedPreference = new SecuredPreference(InstrumentationRegistry.getTargetContext(), "test");
         securedPreference.setLoginPin(PASSWORD);
         assertEquals(true, securedPreference.loginPinMatches(PASSWORD));
     }
@@ -46,9 +47,20 @@ public class KeyGenerationTest {
     @Test
     public void shouldFail() throws Exception {
 
-        securedPreference = new SecuredPreference(InstrumentationRegistry.getTargetContext(), "test");
         securedPreference.setLoginPin(PASSWORD);
         assertEquals(false, securedPreference.loginPinMatches("secureKey"));
+    }
+
+    @Test
+    public void shouldPassSaveKeyValue(){
+        keyChainEncryptedPreference.write("key", "value");
+        assertEquals("value", keyChainEncryptedPreference.read("key"));
+    }
+
+    @Test
+    public void shouldFailSaveKeyValue(){
+        keyChainEncryptedPreference.write("key", "value");
+        assertNotEquals("valu", keyChainEncryptedPreference.read("key"));
     }
 
 }

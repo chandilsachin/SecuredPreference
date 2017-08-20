@@ -21,7 +21,9 @@ public class KeyChainEncryptedPreference {
      */
     public void write(String key, String value) {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(key, encrypt(value));
+        String k = keyChainManager.base64Encode(key);
+        String v = encrypt(value);
+        editor.putString(k, v);
         editor.apply();
     }
 
@@ -29,7 +31,8 @@ public class KeyChainEncryptedPreference {
      * Fetches stored encrypted value against key and converts in plain text.
      */
     public String read(String key) {
-        String v = preferences.getString(key, "");
+        String k = keyChainManager.base64Encode(key);
+        String v = preferences.getString(k, "");
         if (v.length() < 1) return "";
         return decrypt(v);
     }
@@ -48,4 +51,10 @@ public class KeyChainEncryptedPreference {
         return keyChainManager.decrypt(data);
     }
 
+
+    public void flushData(){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

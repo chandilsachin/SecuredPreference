@@ -5,10 +5,12 @@ import android.os.Build;
 import android.security.KeyPairGeneratorSpec;
 import android.support.annotation.RequiresApi;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -172,5 +174,18 @@ public class KeyChainManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String base64Encode(String value) {
+        try {
+            return new String(Base64.encode(value.getBytes("UTF-8"), Base64.DEFAULT));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public String base64Decode(String value){
+        return new String(Base64.decode(value, Base64.DEFAULT));
     }
 }
